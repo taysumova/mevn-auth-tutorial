@@ -1,9 +1,9 @@
 <template>
-  <div id="app">
+  <v-app id="my-app">
     <v-container>
       <router-view />
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <style lang="scss">
@@ -11,6 +11,7 @@
 
 body {
   background: url("./assets/images/bg.jpeg") no-repeat center center fixed;
+  background-size: cover;
   &:after {
     content: "";
     position: fixed;
@@ -21,6 +22,9 @@ body {
     background-color: $background-tint;
     opacity: 0.3;
     z-index: -1;
+  }
+  #my-app {
+    background: none;
   }
 }
 </style>
