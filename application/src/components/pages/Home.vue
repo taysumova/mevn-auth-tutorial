@@ -154,10 +154,12 @@
 
 <script>
 import Axios from "axios";
-import Authentication from "@/views/Authentication";
-import ListHeader from "@/views/List/ListHeader";
-import ListBody from "@/views/List/ListBody";
-const BudgetManagerAPI = `http://${window.location.hostname}:3001`;
+import Authentication from "@/components/pages/Authentication";
+import ListHeader from "./../List/ListHeader";
+import ListBody from "./../List/ListBody";
+
+const BudgetManagerAPI = "https://focus-budget-manager-api.herokuapp.com";
+
 export default {
   components: {
     "list-header": ListHeader,
@@ -180,7 +182,7 @@ export default {
       message: "",
       fab: false,
       listPage: true,
-      createPage: true,
+      createPage: false,
       editPage: false,
       budgetCreation: true,
       budgetEdit: true,
@@ -228,6 +230,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     getAllClients() {
       Axios.get(`${BudgetManagerAPI}/api/v1/client`, {
         headers: {
@@ -242,6 +245,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     getBudget(budget) {
       Axios.get(`${BudgetManagerAPI}/api/v1/budget/single`, {
         headers: {
@@ -260,6 +264,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     getClient(client) {
       Axios.get(`${BudgetManagerAPI}/api/v1/client/single`, {
         headers: {
@@ -278,6 +283,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     enableEdit(type) {
       if (type === "budget") {
         this.listPage = false;
@@ -291,6 +297,7 @@ export default {
         this.editPage = true;
       }
     },
+
     saveBudget(budget) {
       Axios.post(`${BudgetManagerAPI}/api/v1/budget`, budget, {
         headers: {
@@ -309,14 +316,17 @@ export default {
           this.errorHandler(error);
         });
     },
+
     fixClientNameAndUpdate(budget) {
       this.clients.find(client => {
         if (client._id === budget.client_id) {
           budget.client = client.name;
         }
       });
+
       this.updateBudget(budget);
     },
+
     updateBudget(budget) {
       Axios.put(`${BudgetManagerAPI}/api/v1/budget/single`, budget, {
         headers: {
@@ -337,6 +347,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     updateClient(client) {
       Axios.put(`${BudgetManagerAPI}/api/v1/client/single`, client, {
         headers: {
@@ -357,6 +368,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     saveClient(client) {
       Axios.post(`${BudgetManagerAPI}/api/v1/client`, client, {
         headers: {
@@ -375,6 +387,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     deleteItem(selected, items, api) {
       let targetApi = "";
       api ? (targetApi = "budget") : (targetApi = "client");
@@ -397,6 +410,7 @@ export default {
           this.errorHandler(error);
         });
     },
+
     errorHandler(error) {
       const status = error.response.status;
       this.snackbar = true;
@@ -411,6 +425,7 @@ export default {
         this.message = error.message;
       }
     },
+
     removeItem(selected, items) {
       items.forEach((item, index) => {
         if (item === selected) {
@@ -418,6 +433,7 @@ export default {
         }
       });
     },
+
     dataParser(targetedArray, ...options) {
       let parsedData = [];
       targetedArray.forEach(item => {
@@ -427,19 +443,24 @@ export default {
       });
       return parsedData;
     },
+
     resetFields(item) {
       for (let key in item) {
         item[key] = null;
+
         if (key === "quantity" || key === "price") {
           item[key] = 0;
         }
+
         item["items"] = [];
       }
     },
+
     selectState(state) {
       this.state = state;
       state === "all" ? this.getAllBudgets() : this.getBudgetsByState(state);
     },
+
     getBudgetsByState(state) {
       Axios.get(`${BudgetManagerAPI}/api/v1/budget/state`, {
         headers: {
@@ -466,13 +487,15 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./../assets/styles";
+@import "./../../assets/styles";
+
 .l-home {
   background-color: $background-color;
   margin: 25px auto;
   padding: 15px;
   min-width: 272px;
 }
+
 .snack__content {
   justify-content: center !important;
 }

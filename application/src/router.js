@@ -1,14 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
-import * as Auth from "@/views/Authentication";
+import * as Auth from "@/components/pages/Authentication";
 
 // Pages
-import Home from "@/components/Home";
-import Authentication from "@/views/Authentication/Authentication";
+import Home from "@/components/pages/Home";
+import Authentication from "@/components/pages/Authentication/Authentication";
 
 // Global components
 import Header from "@/components/Header";
-import List from "@/views/List/List";
+import List from "@/components/List/List";
 import Create from "@/components/pages/Create";
 
 // Register components
