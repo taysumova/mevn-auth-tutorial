@@ -18,7 +18,7 @@
           prepend-icon="lock"
           :rules="rules"
           :append-icon="loginPasswordVisible ? 'visibility' : 'visibility_off'"
-          :append-icon-cb="() => (loginPasswordVisible = !loginPasswordVisible)"
+          @click:append="() => (loginPasswordVisible = !loginPasswordVisible)"
           :type="loginPasswordVisible ? 'text' : 'password'"
           color="light-blue lighten-1"
           required
@@ -57,9 +57,7 @@
           prepend-icon="lock"
           :rules="rules"
           :append-icon="signUpPasswordVisible ? 'visibility' : 'visibility_off'"
-          :append-icon-cb="
-            () => (signUpPasswordVisible = !signUpPasswordVisible)
-          "
+          @click:append="() => (signUpPasswordVisible = !signUpPasswordVisible)"
           :type="signUpPasswordVisible ? 'text' : 'password'"
           color="light-blue lighten-1"
           required
@@ -67,18 +65,16 @@
         </v-text-field>
 
         <v-btn block color="light-blue lighten-1" @click.native="submitSignUp()"
-          >Sign Up</v-btn
-        >
+          >Sign Up
+        </v-btn>
       </v-form>
     </div>
 
-    <v-snackbar
-      timeout="6000"
-      bottom="bottom"
-      color="red lighten-1"
-      v-model="snackbar"
-    >
+    <v-snackbar :timeout="6000" bottom color="red lighten-1" v-model="snackbar">
       {{ message }}
+      <v-btn color="black" flat @click="snackbar = false">
+        Close
+      </v-btn>
     </v-snackbar>
   </div>
 </template>
