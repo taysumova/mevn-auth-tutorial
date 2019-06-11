@@ -16,6 +16,11 @@ const Schema = mongoose.Schema({
     required: true
   },
 
+  description: {
+    type: String,
+    required: true
+  },
+
   total_price: {
     type: Number,
     required: true
@@ -24,6 +29,11 @@ const Schema = mongoose.Schema({
   client_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client'
+  },
+
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
 
   items: [{}]

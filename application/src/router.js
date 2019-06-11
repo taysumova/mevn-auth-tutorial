@@ -1,19 +1,24 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Authentication from "@/views/Authentication";
+import * as Auth from "@/views/Authentication";
+
+// Pages
 import Home from "@/components/Home";
+import Authentication from "@/views/Authentication/Authentication";
 
+// Global components
 import Header from "@/components/Header";
-import BudgetList from "@/views/Budget/BudgetList.vue";
+import List from "@/views/List/List";
+import Create from "@/components/pages/Create";
 
+// Register components
 Vue.component("app-header", Header);
-Vue.component("budget-list", BudgetList);
+Vue.component("list", List);
+Vue.component("create", Create);
 
 Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
-  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
@@ -21,23 +26,21 @@ const router = new Router({
       components: {
         default: Home,
         header: Header,
-        budgetList: BudgetList
-      },
-      meta: {
-        requiredAuth: true
+        list: List,
+        create: Create
       }
     },
     {
       path: "/login",
       name: "Authentication",
-      component: () => import("./views/Authentication/Authentication.vue")
+      component: Authentication
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiredAuth) {
-    if (Authentication.default.user.authenticated) {
+  if (to.path !== "/login") {
+    if (Auth.default.user.authenticated) {
       next();
     } else {
       router.push("/login");
